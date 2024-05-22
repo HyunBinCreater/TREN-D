@@ -1,0 +1,69 @@
+
+.body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+ 
+ .loginApi{
+ 	margin-top:70px; 
+ 	position:relative;
+ 	left:-20px;
+ 	top:-60px;
+ 	padding-bottom:10px;
+ }
+
+ .loginApi ul li {
+ 	list-style: none; 
+ }
+ .member_idpass{
+ 	font-size:12px;
+ 	margin-bottom:10px;
+ }
+ .form-floating {
+	width: 400px; margin: 50px auto 30px; padding: 20px 40px 50px;
+    border-radius: 30px; background-color: #FAFAFA;
+}
+.form-floating h1 {
+	padding-top:30px;
+	padding-bottom:30px;
+}
+input[type=text], input[type=password] {
+  background: white;
+  border: 1px solid #222;
+  border-radius: .3em;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+  color: black;
+  font-size: 13px;
+  margin-bottom: 5px;
+  padding: 8px 5px;
+  height:40px;
+  width:250px;
+}
+.login{
+	text-align:center;
+}
+.memberInfo{
+	position:relative;
+	left:20px;
+	padding-bottom:50px;
+}
+.memberInfo ul li {
+	list-style:none;
+	float:left;
+	text-align:center;
+	font-size:11px;
+}
+.separator{
+  display:block;
+  margin:30px auto 10px;
+  text-align:center;
+  height:40px;
+  position:relative;
+  background:transparent;
+  color: rgba(#0f132a,.4);
+  font-size:13px;
+  width:90%;
+  max-width:680px;
+ }
