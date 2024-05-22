@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.service.impl.UserMapper">
+
+	<select id="userSelectDetail" resultType="userVO">
+		SELECT   USERID
+				,PASS
+				,NAME
+				,NICKNAME
+				,TO_CHAR(BIRTH,'YYYY/MM/DD') BIRTH
+				,GENDER
+				,POSTCODE
+				,LOADADDR
+				,ETCADDR
+				,MOBILE
+		  FROM 
+				MEMBER_INFO
+		WHERE	
+				USERID = 'nana123'
+	</select>
+	
+	<select id="userSelect2Detail" resultType="userVO">
+		SELECT   USERID
+				,DECODE(GRADE,'1','반가운 사이','2','고마운 사이','3','정다운 사이','4','설레는 사이','5','애틋한 사이') GRADE
+				,MILEAGE
+				,HEIGHT
+				,WEIGHT
+				,TOPSIZE
+				,BTMSIZE
+				,FOOTSIZE
+				,TOTALPAY
+		  FROM 
+				MEMBER_INFO_02
+		WHERE	
+				USERID = 'nana123'
+	</select>
+	
+	<select id="userSelectpassCnt" resultType="int">
+		SELECT COUNT(*) FROM MEMBER_INFO WHERE USERID='nana123'	and PASS='${pass}'
+	</select>
+	
+	<update id="userSizeUpdate">
+		UPDATE MEMBER_INFO_02 
+							SET
+								HEIGHT = #{height}
+								,WEIGHT = #{weight}
+								,TOPSIZE = #{topsize}
+								,BTMSIZE = #{btmsize}
+								,FOOTSIZE = #{footsize}
+		WHERE USERID='nana123'
+									
+	</update>
+	
+	<update id="userUpdate">
+		UPDATE MEMBER_INFO
+			SET
+				NAME		= #{name},
+				NICKNAME	= #{nickname},
+				MOBILE  	= #{mobile}
+	  	WHERE  
+			USERID = 'nana123'
+	</update>
+	
+	<update id="userPassModifySave">
+		UPDATE MEMBER_INFO
+			SET
+				PASS = #{pass}
+			WHERE
+				USERID = 'nana123'
+	</update>
+	
+	<update id="addInfoUpdate">
+		UPDATE MEMBER_INFO
+			SET
+				GENDER = '${gender}',
+				BIRTH = '${birth}'
+			WHERE
+				USERID = 'nana123'
+	</update>
+	
+
+</mapper>

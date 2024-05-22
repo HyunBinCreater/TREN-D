@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.service.impl.CategoryMapper">
+
+	<resultMap id="sample" type="egov.service.CategoryVO">
+		
+	</resultMap>
+	
+	
+	
+	<insert id="CategoryInsert"> 
+	
+		INSERT INTO CATEGORY(
+					CATELCODE
+					,CATEMCODE
+					,CATESCODE
+			) VALUES('${catelcode }'
+					,'${catemcode }'
+					,'${catescode }' )
+			
+		
+	
+	</insert>
+	
+	
+	<select id="CategoryList1" resultType="egovMap">
+		SELECT 	CATELCODE
+		FROM CATEGORY WHERE CATELCODE IS NOT NULL
+	</select>
+	
+	<select id="CategoryList2" resultType="egovMap">
+		SELECT 	CATEMCODE
+		FROM CATEGORY WHERE CATEMCODE IS NOT NULL
+	</select>
+	
+	<select id="CategoryList3" resultType="egovMap">
+		SELECT 	CATESCODE
+		FROM CATEGORY WHERE CATESCODE IS NOT NULL
+	</select>
+
+	
+	
+	
+	
+
+
+</mapper>

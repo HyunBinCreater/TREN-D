@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.service.impl.WishMapper">
+
+	<select id="wishBrandList" resultType="egovMap">
+			SELECT   USERID
+					,PROBRAND
+				FROM
+					WISHBRAND
+				WHERE
+					USERID='nana123'
+			ORDER BY
+					PROBRAND ASC
+	</select>
+	
+	<select id="wishList" resultType="egovMap">
+			SELECT np.PROUNQ
+					,np.PROBRAND
+					,np.PRONAME
+					,np.PROINFO
+					,np.AMOUNT
+					,TO_CHAR(np.PROPRICE,'999,999,999,999') PROPRICE
+					,np.CATELCODE
+					,np.CATEMCODE
+					,np.CATESCODE
+					,np.PROFILENAME
+						FROM new_product np
+						JOIN wishlist wl ON np.PROUNQ = wl.PROUNQ
+						    AND np.PROBRAND = wl.PROBRAND
+						    AND np.PRONAME = wl.PRONAME
+						WHERE wl.USERID = 'nana123'
+	</select>
+	
+	<!--<insert id="wishBrandInsert">
+		INSERT INTO WISHBRAND (USERID
+								,PROBRAND)
+				VALUES (#{userid}
+						,#{probrand})						
+	</insert>-->
+	
+	<delete id="wishBrandDelete">
+		DELETE FROM WISHBRAND WHERE USERID=#{userid} AND PROBRAND=#{probrand}
+	</delete>
+	
+	<delete id="wishListDelete">
+		DELETE FROM WISHLIST WHERE USERID=#{userid} AND PROUNQ=#{prounq}
+	</delete>
+
+</mapper>

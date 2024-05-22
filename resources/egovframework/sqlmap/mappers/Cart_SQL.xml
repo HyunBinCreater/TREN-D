@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.service.impl.CartMapper">
+	
+	<select id="cartSelectList" resultType="egovMap">
+					SELECT 
+				    ci.cartcode,
+				    c.userid,
+				    ci.prounq AS product_unq,
+				    np.probrand AS brand,
+				    np.proname AS name,
+				    np.proprice AS price,
+				    np.profilename AS filename,
+				    ci.amount,
+				    'new' AS product_type,
+				    ci.prounq AS prounq,
+				    NULL AS usedprounq
+				FROM 
+				    cart_item ci
+				JOIN 
+				    new_product np ON ci.prounq = np.prounq
+				JOIN 
+				    cart c ON ci.cartcode = c.cartcode
+				WHERE 
+				    ci.prounq IS NOT NULL
+				    AND ci.cartcode = '100001'
+				    AND c.userid = 'aa'
+				
+				UNION
+				
+				
+				SELECT 
+				    ci.cartcode,
+				    c.userid,
+				    NULL AS product_unq,
+				    up.usedprobrand AS brand,
+				    up.usedproname AS name,
+				    up.usedproprice AS price,
+				    up.usedprofilename AS filename,
+				    ci.amount,
+				    'used' AS product_type,
+				    NULL AS prounq,
+				    ci.usedprounq AS usedprounq
+				FROM 
+				    cart_item ci
+				JOIN 
+				    used_product up ON ci.usedprounq = up.usedprounq
+				JOIN 
+				    cart c ON ci.cartcode = c.cartcode
+				WHERE 
+				    ci.usedprounq IS NOT NULL
+				    AND ci.cartcode = '100001'
+				    AND c.userid = 'aa'
+	</select>
+	
+	<update id="cartItemAmountUpdate">
+        UPDATE
+        	cart_item
+	    SET
+	    	amount = '${amount}'
+	    WHERE
+	    	cartcode = '${cartcode}'
+	    <if test="usedprounq != 0">
+	        AND usedprounq = '${usedprounq}'
+	    </if>
+	    <if test="usedprounq == 0">
+	        AND prounq = '${prounq}'
+	    </if>
+	</update>
+	
+	<update id="cartAmountUpdate">
+
+		UPDATE cart_item ci
+			JOIN
+				cart c ON ci.cartcode = c.cartcode				
+            SET
+            	ci.amount = '${amount}', c.amount = '${amount}'
+            WHERE
+            	ci.cartcode = '10001'
+            	<if test="product_type = 'used'">
+				  	AND ci.usedprounq = '${usedprounq}'
+				</if>
+            	AND ci.prounq = '${prounq}'
+		UPDATE
+			cart c
+		SET c.amount = (
+					    SELECT
+					    	SUM(ci.amount)
+					    FROM
+					    	cart_item ci
+					    WHERE
+					    	ci.cartcode = c.cartcode
+						)
+		WHERE
+			c.cartcode = #{cartcode}
+
+	</update>
+	
+	<delete id="cartItemDelete">
+		DELETE 
+			FROM
+				CART_ITEM
+		WHERE 
+			CARTCODE = #{cartcode}
+		<if test="usedprounq != 0">
+	        AND usedprounq = '${usedprounq}'
+	    </if>
+	    <if test="usedprounq == 0">
+	        AND prounq = '${prounq}'
+	    </if>
+	</delete>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.service.impl.ProductMapper">
+
+	
+	<select id="searchSelectList" resultType="egovMap">  
+	SELECT B.* FROM (
+		SELECT ROWNUM RN, A.* FROM (
+				SELECT 	 PROUNQ
+						,PROBRAND
+						,PRONAME
+						,PROINFO
+						,AMOUNT
+						,PROPRICE
+						,CATELCODE
+						,CATEMCODE
+						,CATESCODE
+						,PROFILENAME									
+				FROM 
+						NEW_PRODUCT 
+				WHERE 
+						PRONAME LIKE '%' || #{searchKeyword} || '%'
+				OR
+						PROINFO LIKE '%' || #{searchKeyword} || '%'
+					
+				ORDER BY PROUNQ  DESC ) A ) B
+		WHERE
+				RN BETWEEN '${firstIndex}' AND '${lastIndex}'
+		
+	
+	</select>
+	
+	<select id="usedsearchSelectList" resultType="egovMap"> 
+	SELECT B.* FROM (
+		SELECT ROWNUM RN, A.* FROM (
+			SELECT 	 USEDPROUNQ
+					,USEDPROBRAND
+					,USEDPRONAME
+					,USEDPROINFO
+					,USEDPROPRICE
+					,USEDPROFILENAME
+									
+			FROM 
+					USED_PRODUCT 
+			WHERE 
+					USEDPRONAME LIKE '%' || #{searchKeyword} || '%'
+			OR
+					USEDPROINFO LIKE '%' || #{searchKeyword} || '%'
+			ORDER BY USEDPROUNQ  DESC ) A ) B
+		WHERE
+				RN BETWEEN '${firstIndex}' AND '${lastIndex}'
+		
+	
+	</select>
+	
+	<select id="searchSelectTotal" resultType="int">
+	
+		SELECT COUNT(*) FROM NEW_PRODUCT
+		WHERE
+				PRONAME LIKE '%' || #{searchKeyword} || '%'
+		OR
+				PROINFO LIKE '%' || #{searchKeyword} || '%'
+	
+	</select>
+	
+	<select id="usedsearchSelectTotal" resultType="int">
+	
+		SELECT COUNT(*) FROM USED_PRODUCT
+		WHERE
+				USEDPRONAME LIKE '%' || #{searchKeyword} || '%'
+		OR
+				USEDPROINFO LIKE '%' || #{searchKeyword} || '%'
+	
+	</select>
+	
+	<select id="newproductUpList" resultType="egovMap"> 
+	
+				SELECT 	 
+						 PRONAME
+						,PROINFO
+						,PROPRICE
+						,PROFILENAME
+										
+				FROM 
+						NEW_PRODUCT 
+				
+				ORDER BY PROUNQ  DESC 
+	
+	</select>
+	
+	<select id="productSelectLsit" resultType="productVO"> 
+	
+		SELECT  		PROUNQ
+						,PROBRAND
+						,PRONAME
+						,PROINFO
+						,AMOUNT
+						,PROPRICE
+						,CATELCODE
+						,CATEMCODE
+						,CATESCODE
+						,PROFILENAME
+										
+				FROM 
+						NEW_PRODUCT 
+				WHERE 
+						PROUNQ = '${prounq}'
+	
+	</select>
+	
+</mapper>
